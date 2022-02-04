@@ -1,6 +1,7 @@
 package com.demo.HotelBooking.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,16 @@ public class HotelService {
 		List<Hotel> hotelList = null;
 		hotelList = hotelRepository.findAll();
 		return hotelList;
+	}
+	
+	public Hotel fetchHotelById(int id){
+		log.info("To list a hostel by {} ",id);
+		Hotel hotel= null;
+		Optional<Hotel> hotelDetailsById = hotelRepository.findById(id);
+		if(!hotelDetailsById.isEmpty()) {
+			hotel = hotelDetailsById.get();
+		}
+		return hotel;
 	}
 
 }

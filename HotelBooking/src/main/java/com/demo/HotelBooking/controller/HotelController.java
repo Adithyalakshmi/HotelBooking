@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,6 +67,27 @@ public class HotelController {
 			log.error("Exception while fetching all hotels: {}",e.getMessage());
 			responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 			
+		}
+		return responseEntity;
+	}
+	
+	@GetMapping("/fetchHotelById/{hotelId}")
+	public ResponseEntity<?> fetchHotelById(@PathVariable("hotelId") int id) {
+		log.info("Inside fetchHotelById {}",id);
+		ResponseEntity<?> responseEntity = null;
+		Hotel hotel = null;
+		try {
+			hotel = hotelService.fetchHotelById(id);
+			if(ObjectUtils.isEmpty(hotel)) {
+				responseEntity = ResponseEntity.noContent().build();
+			}
+			else {
+				responseEntity = ResponseEntity.ok().body(hotel);
+			}
+		}
+		catch(Exception e) {
+			log.error("Exception while fetching hotel by id {}",e.getMessage());
+			responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		return responseEntity;
 	}
