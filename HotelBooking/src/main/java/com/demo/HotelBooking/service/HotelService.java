@@ -41,5 +41,20 @@ public class HotelService {
 		}
 		return hotel;
 	}
+	
+	public String deleteHotelById(int id) {
+		
+		Optional<Hotel> hotelDetailsById = hotelRepository.findById(id);
+		if(!hotelDetailsById.isEmpty()) {
+			log.info("Hotel with id {} is present ",id);
+			hotelRepository.deleteById(id);
+			log.info("Hotel with id {} is deleted",id);
+			return "Hotel with id " +id+ " is deleted";
+		}
+		else {
+			return "Hotel with id " +id+ " is not present";
+		}
+		
+	}
 
 }

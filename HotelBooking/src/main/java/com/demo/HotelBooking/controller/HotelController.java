@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -90,6 +91,20 @@ public class HotelController {
 			responseEntity = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		return responseEntity;
+	}
+	
+	@DeleteMapping("/deleteHotelById/{hotelId}")
+	public String deleteHotelById(@PathVariable("hotelId") int id) {
+		String response = null;
+		try {
+			response = hotelService.deleteHotelById(id);
+		}
+		catch(Exception e) {
+			log.error("Exception while trying to delete hotel");
+			response = "Not able to delete hotel";
+		}
+		
+		return response;
 	}
 
 }
