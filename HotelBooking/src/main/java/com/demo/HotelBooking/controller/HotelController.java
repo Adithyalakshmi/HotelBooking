@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.demo.HotelBooking.model.Hotel;
 import com.demo.HotelBooking.service.HotelService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/hotel")
 public class HotelController {
@@ -29,6 +31,7 @@ public class HotelController {
 	
 	private static final Logger log =LoggerFactory.getLogger(HotelController.class);
 	
+	@Operation(summary = "Add Hotel",description = "To Add the details of a new hotel")
 	@PostMapping("/addHotel") 
 	public ResponseEntity<?> addHotel(@RequestBody Hotel hotel) {
 		log.info("To save hotel details");
@@ -50,6 +53,7 @@ public class HotelController {
 		return responseEntity;
 	}
 	
+	@Operation(summary = "Fetch all Hotels",description = "To Fetch the details of all hotels")
 	@GetMapping("/fetchAllHotels")
 	public ResponseEntity<?> listAllHotels() {
 		log.info("to list all hotels ");
@@ -72,6 +76,7 @@ public class HotelController {
 		return responseEntity;
 	}
 	
+	@Operation(summary = "Fetch Hotel By Id",description = "To fetch the details of a particular hotel ")
 	@GetMapping("/fetchHotelById/{hotelId}")
 	public ResponseEntity<?> fetchHotelById(@PathVariable("hotelId") int id) {
 		log.info("Inside fetchHotelById {}",id);
@@ -93,6 +98,7 @@ public class HotelController {
 		return responseEntity;
 	}
 	
+	@Operation(summary = "Delete Hotel By Id",description = "To delete a particular hotel")
 	@DeleteMapping("/deleteHotelById/{hotelId}")
 	public String deleteHotelById(@PathVariable("hotelId") int id) {
 		String response = null;
