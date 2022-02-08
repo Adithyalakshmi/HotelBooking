@@ -21,6 +21,9 @@ import com.demo.HotelBooking.model.Hotel;
 import com.demo.HotelBooking.service.HotelService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.media.Content;
 
 @RestController
 @RequestMapping("/hotel")
@@ -32,6 +35,12 @@ public class HotelController {
 	private static final Logger log =LoggerFactory.getLogger(HotelController.class);
 	
 	@Operation(summary = "Add Hotel",description = "To Add the details of a new hotel")
+	@ApiResponses(value = {
+	        @ApiResponse(responseCode = "200", description = "Added Hotel Sucessfully",
+	        		content = {@Content(mediaType = "application/json")}),
+	        @ApiResponse(responseCode = "404", description = "Not able to add a hotel",
+	        		content = {@Content()})
+	})
 	@PostMapping("/addHotel") 
 	public ResponseEntity<?> addHotel(@RequestBody Hotel hotel) {
 		log.info("To save hotel details");
@@ -54,6 +63,12 @@ public class HotelController {
 	}
 	
 	@Operation(summary = "Fetch all Hotels",description = "To Fetch the details of all hotels")
+	@ApiResponses(value = {
+	        @ApiResponse(responseCode = "200", description = "fetched the hotel details",
+	        		content = {@Content(mediaType = "application/json")}),
+	        @ApiResponse(responseCode = "404", description = "Not able fetch hoteldetails",
+	        		content = {@Content()})
+	})
 	@GetMapping("/fetchAllHotels")
 	public ResponseEntity<?> listAllHotels() {
 		log.info("to list all hotels ");
@@ -77,6 +92,12 @@ public class HotelController {
 	}
 	
 	@Operation(summary = "Fetch Hotel By Id",description = "To fetch the details of a particular hotel ")
+	@ApiResponses(value = {
+	        @ApiResponse(responseCode = "200", description = "Fetched a particular hotel",
+	        		content = {@Content(mediaType = "application/json")}),
+	        @ApiResponse(responseCode = "404", description = "Not able to fetch the specific hotel",
+	        		content = {@Content()})
+	})
 	@GetMapping("/fetchHotelById/{hotelId}")
 	public ResponseEntity<?> fetchHotelById(@PathVariable("hotelId") int id) {
 		log.info("Inside fetchHotelById {}",id);
@@ -99,6 +120,12 @@ public class HotelController {
 	}
 	
 	@Operation(summary = "Delete Hotel By Id",description = "To delete a particular hotel")
+	@ApiResponses(value = {
+	        @ApiResponse(responseCode = "200", description = "Deleted a hotel",
+	        		content = {@Content(mediaType = "application/json")}),
+	        @ApiResponse(responseCode = "404", description = "Not able to delete the hotel",
+	        		content = {@Content()})
+	})
 	@DeleteMapping("/deleteHotelById/{hotelId}")
 	public String deleteHotelById(@PathVariable("hotelId") int id) {
 		String response = null;
